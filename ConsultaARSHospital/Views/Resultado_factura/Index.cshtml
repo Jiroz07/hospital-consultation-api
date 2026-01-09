@@ -1,0 +1,64 @@
+﻿@model IEnumerable<ConsultaARSHospital.Resultado_factura>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fecha_factura)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.monto)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Doctores.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Forma_de_pago.nombre_forma_pago)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Pacientes.nombre)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Seguros.nombre_seguro)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecha_factura)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.monto)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Doctores.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Forma_de_pago.nombre_forma_pago)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pacientes.nombre)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Seguros.nombre_seguro)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_resultado_factura }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_resultado_factura }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_resultado_factura })
+        </td>
+    </tr>
+}
+
+</table>

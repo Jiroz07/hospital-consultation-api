@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ConsultaARSHospital.Historico_paciente>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fecha_cambio_estatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Estatus.nombre_estatus)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Resultado_factura.id_resultado_factura)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.fecha_cambio_estatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Estatus.nombre_estatus)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Resultado_factura.id_resultado_factura)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.id_historico_paciente }) |
+            @Html.ActionLink("Details", "Details", new { id=item.id_historico_paciente }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.id_historico_paciente })
+        </td>
+    </tr>
+}
+
+</table>

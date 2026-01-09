@@ -1,0 +1,41 @@
+﻿@model ConsultaARSHospital.Doctores
+
+@{
+    ViewBag.Title = "Editar Doctor";
+}
+
+<h2>Editar Doctor</h2>
+
+@using (Html.BeginForm("EditarDoctor", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.id_doctor)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.nombre)
+        @Html.TextBoxFor(model => model.nombre, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.apellido)
+        @Html.TextBoxFor(model => model.apellido, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.email)
+        @Html.TextBoxFor(model => model.email, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.telefono)
+        @Html.TextBoxFor(model => model.telefono, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.id_hospital)
+        @Html.TextBoxFor(model => model.id_hospital, new { @class = "form-control" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Guardar Cambios</button>
+}

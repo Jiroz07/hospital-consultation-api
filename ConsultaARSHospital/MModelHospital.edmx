@@ -1,0 +1,981 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ConsultasHospitalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ConfirmacionCita">
+          <Key>
+            <PropertyRef Name="id_confirmacion" />
+          </Key>
+          <Property Name="id_confirmacion" Type="int" Nullable="false" />
+          <Property Name="id_paciente" Type="int" />
+          <Property Name="id_doctor" Type="int" />
+          <Property Name="id_hospital" Type="int" />
+          <Property Name="id_especialidad" Type="int" />
+          <Property Name="id_seguro" Type="int" />
+          <Property Name="id_horario" Type="int" />
+        </EntityType>
+        <EntityType Name="Doctores">
+          <Key>
+            <PropertyRef Name="id_doctor" />
+          </Key>
+          <Property Name="id_doctor" Type="int" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="255" />
+          <Property Name="apellido" Type="nvarchar" MaxLength="255" />
+          <Property Name="email" Type="nvarchar" MaxLength="255" />
+          <Property Name="telefono" Type="nvarchar" MaxLength="20" />
+          <Property Name="id_hospital" Type="int" />
+        </EntityType>
+        <EntityType Name="Especialidades">
+          <Key>
+            <PropertyRef Name="id_especialidad" />
+          </Key>
+          <Property Name="id_especialidad" Type="int" Nullable="false" />
+          <Property Name="nombre_especialidad" Type="nvarchar" MaxLength="255" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="1000" />
+          <Property Name="id_doctor" Type="int" />
+        </EntityType>
+        <EntityType Name="Estatus">
+          <Key>
+            <PropertyRef Name="id_estatus" />
+          </Key>
+          <Property Name="id_estatus" Type="int" Nullable="false" />
+          <Property Name="nombre_estatus" Type="nvarchar" MaxLength="50" />
+          <Property Name="descripcion" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <EntityType Name="Forma_de_pago">
+          <Key>
+            <PropertyRef Name="id_forma_pago" />
+          </Key>
+          <Property Name="id_forma_pago" Type="int" Nullable="false" />
+          <Property Name="nombre_forma_pago" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Historico_paciente">
+          <Key>
+            <PropertyRef Name="id_historico_paciente" />
+          </Key>
+          <Property Name="id_historico_paciente" Type="int" Nullable="false" />
+          <Property Name="id_resultado_factura" Type="int" />
+          <Property Name="id_estatus" Type="int" />
+          <Property Name="fecha_cambio_estatus" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Horarios">
+          <Key>
+            <PropertyRef Name="id_horario" />
+          </Key>
+          <Property Name="id_horario" Type="int" Nullable="false" />
+          <Property Name="id_doctor" Type="int" />
+          <Property Name="hora_inicio" Type="time" Precision="7" />
+          <Property Name="hora_fin" Type="time" Precision="7" />
+          <Property Name="dia_semana" Type="nvarchar" MaxLength="15" />
+        </EntityType>
+        <EntityType Name="Hospitales">
+          <Key>
+            <PropertyRef Name="id_hospital" />
+          </Key>
+          <Property Name="id_hospital" Type="int" Nullable="false" />
+          <Property Name="nombre_hospital" Type="nvarchar" MaxLength="255" />
+          <Property Name="direccion" Type="nvarchar" MaxLength="500" />
+          <Property Name="telefono" Type="nvarchar" MaxLength="20" />
+        </EntityType>
+        <EntityType Name="Pacientes">
+          <Key>
+            <PropertyRef Name="id_paciente" />
+          </Key>
+          <Property Name="id_paciente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="255" />
+          <Property Name="apellido" Type="nvarchar" MaxLength="255" />
+          <Property Name="fecha_nacimiento" Type="date" />
+          <Property Name="direccion" Type="nvarchar" MaxLength="500" />
+          <Property Name="email" Type="nvarchar" MaxLength="255" />
+          <Property Name="id_seguro" Type="int" />
+          <Property Name="id_horario" Type="int" />
+        </EntityType>
+        <EntityType Name="Resultado_factura">
+          <Key>
+            <PropertyRef Name="id_resultado_factura" />
+          </Key>
+          <Property Name="id_resultado_factura" Type="int" Nullable="false" />
+          <Property Name="id_doctor" Type="int" />
+          <Property Name="id_forma_pago" Type="int" />
+          <Property Name="id_paciente" Type="int" />
+          <Property Name="id_seguro" Type="int" />
+          <Property Name="fecha_factura" Type="datetime" />
+          <Property Name="monto" Type="decimal" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="Seguros">
+          <Key>
+            <PropertyRef Name="id_seguro" />
+          </Key>
+          <Property Name="id_seguro" Type="int" Nullable="false" />
+          <Property Name="nombre_seguro" Type="nvarchar" MaxLength="255" />
+          <Property Name="tipo_cobertura" Type="nvarchar" MaxLength="1000" />
+        </EntityType>
+        <Association Name="FK__Confirmac__id_do__03F0984C">
+          <End Role="Doctores" Type="Self.Doctores" Multiplicity="0..1" />
+          <End Role="ConfirmacionCita" Type="Self.ConfirmacionCita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctores">
+              <PropertyRef Name="id_doctor" />
+            </Principal>
+            <Dependent Role="ConfirmacionCita">
+              <PropertyRef Name="id_doctor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Confirmac__id_es__05D8E0BE">
+          <End Role="Especialidades" Type="Self.Especialidades" Multiplicity="0..1" />
+          <End Role="ConfirmacionCita" Type="Self.ConfirmacionCita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especialidades">
+              <PropertyRef Name="id_especialidad" />
+            </Principal>
+            <Dependent Role="ConfirmacionCita">
+              <PropertyRef Name="id_especialidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Confirmac__id_ho__04E4BC85">
+          <End Role="Hospitales" Type="Self.Hospitales" Multiplicity="0..1" />
+          <End Role="ConfirmacionCita" Type="Self.ConfirmacionCita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitales">
+              <PropertyRef Name="id_hospital" />
+            </Principal>
+            <Dependent Role="ConfirmacionCita">
+              <PropertyRef Name="id_hospital" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Confirmac__id_ho__07C12930">
+          <End Role="Horarios" Type="Self.Horarios" Multiplicity="0..1" />
+          <End Role="ConfirmacionCita" Type="Self.ConfirmacionCita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Horarios">
+              <PropertyRef Name="id_horario" />
+            </Principal>
+            <Dependent Role="ConfirmacionCita">
+              <PropertyRef Name="id_horario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Confirmac__id_pa__02FC7413">
+          <End Role="Pacientes" Type="Self.Pacientes" Multiplicity="0..1" />
+          <End Role="ConfirmacionCita" Type="Self.ConfirmacionCita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pacientes">
+              <PropertyRef Name="id_paciente" />
+            </Principal>
+            <Dependent Role="ConfirmacionCita">
+              <PropertyRef Name="id_paciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Confirmac__id_se__06CD04F7">
+          <End Role="Seguros" Type="Self.Seguros" Multiplicity="0..1" />
+          <End Role="ConfirmacionCita" Type="Self.ConfirmacionCita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seguros">
+              <PropertyRef Name="id_seguro" />
+            </Principal>
+            <Dependent Role="ConfirmacionCita">
+              <PropertyRef Name="id_seguro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Doctores__id_hos__398D8EEE">
+          <End Role="Hospitales" Type="Self.Hospitales" Multiplicity="0..1" />
+          <End Role="Doctores" Type="Self.Doctores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitales">
+              <PropertyRef Name="id_hospital" />
+            </Principal>
+            <Dependent Role="Doctores">
+              <PropertyRef Name="id_hospital" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Especiali__id_do__3C69FB99">
+          <End Role="Doctores" Type="Self.Doctores" Multiplicity="0..1" />
+          <End Role="Especialidades" Type="Self.Especialidades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctores">
+              <PropertyRef Name="id_doctor" />
+            </Principal>
+            <Dependent Role="Especialidades">
+              <PropertyRef Name="id_doctor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historico__id_es__4E88ABD4">
+          <End Role="Estatus" Type="Self.Estatus" Multiplicity="0..1" />
+          <End Role="Historico_paciente" Type="Self.Historico_paciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="id_estatus" />
+            </Principal>
+            <Dependent Role="Historico_paciente">
+              <PropertyRef Name="id_estatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historico__id_re__4D94879B">
+          <End Role="Resultado_factura" Type="Self.Resultado_factura" Multiplicity="0..1" />
+          <End Role="Historico_paciente" Type="Self.Historico_paciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resultado_factura">
+              <PropertyRef Name="id_resultado_factura" />
+            </Principal>
+            <Dependent Role="Historico_paciente">
+              <PropertyRef Name="id_resultado_factura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Horarios__id_doc__5165187F">
+          <End Role="Doctores" Type="Self.Doctores" Multiplicity="0..1" />
+          <End Role="Horarios" Type="Self.Horarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctores">
+              <PropertyRef Name="id_doctor" />
+            </Principal>
+            <Dependent Role="Horarios">
+              <PropertyRef Name="id_doctor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Resultado__id_do__45F365D3">
+          <End Role="Doctores" Type="Self.Doctores" Multiplicity="0..1" />
+          <End Role="Resultado_factura" Type="Self.Resultado_factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctores">
+              <PropertyRef Name="id_doctor" />
+            </Principal>
+            <Dependent Role="Resultado_factura">
+              <PropertyRef Name="id_doctor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Resultado__id_fo__46E78A0C">
+          <End Role="Forma_de_pago" Type="Self.Forma_de_pago" Multiplicity="0..1" />
+          <End Role="Resultado_factura" Type="Self.Resultado_factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Forma_de_pago">
+              <PropertyRef Name="id_forma_pago" />
+            </Principal>
+            <Dependent Role="Resultado_factura">
+              <PropertyRef Name="id_forma_pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pacientes_Horarios">
+          <End Role="Horarios" Type="Self.Horarios" Multiplicity="0..1" />
+          <End Role="Pacientes" Type="Self.Pacientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Horarios">
+              <PropertyRef Name="id_horario" />
+            </Principal>
+            <Dependent Role="Pacientes">
+              <PropertyRef Name="id_horario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pacientes_Seguros">
+          <End Role="Seguros" Type="Self.Seguros" Multiplicity="0..1" />
+          <End Role="Pacientes" Type="Self.Pacientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seguros">
+              <PropertyRef Name="id_seguro" />
+            </Principal>
+            <Dependent Role="Pacientes">
+              <PropertyRef Name="id_seguro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ResultadoFactura_Pacientes">
+          <End Role="Pacientes" Type="Self.Pacientes" Multiplicity="0..1" />
+          <End Role="Resultado_factura" Type="Self.Resultado_factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pacientes">
+              <PropertyRef Name="id_paciente" />
+            </Principal>
+            <Dependent Role="Resultado_factura">
+              <PropertyRef Name="id_paciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ResultadoFactura_Seguros">
+          <End Role="Seguros" Type="Self.Seguros" Multiplicity="0..1" />
+          <End Role="Resultado_factura" Type="Self.Resultado_factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seguros">
+              <PropertyRef Name="id_seguro" />
+            </Principal>
+            <Dependent Role="Resultado_factura">
+              <PropertyRef Name="id_seguro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ConsultasHospitalModelStoreContainer">
+          <EntitySet Name="ConfirmacionCita" EntityType="Self.ConfirmacionCita" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Doctores" EntityType="Self.Doctores" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Especialidades" EntityType="Self.Especialidades" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Estatus" EntityType="Self.Estatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Forma_de_pago" EntityType="Self.Forma_de_pago" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Historico_paciente" EntityType="Self.Historico_paciente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Horarios" EntityType="Self.Horarios" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Hospitales" EntityType="Self.Hospitales" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Pacientes" EntityType="Self.Pacientes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Resultado_factura" EntityType="Self.Resultado_factura" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Seguros" EntityType="Self.Seguros" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Confirmac__id_do__03F0984C" Association="Self.FK__Confirmac__id_do__03F0984C">
+            <End Role="Doctores" EntitySet="Doctores" />
+            <End Role="ConfirmacionCita" EntitySet="ConfirmacionCita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Confirmac__id_es__05D8E0BE" Association="Self.FK__Confirmac__id_es__05D8E0BE">
+            <End Role="Especialidades" EntitySet="Especialidades" />
+            <End Role="ConfirmacionCita" EntitySet="ConfirmacionCita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Confirmac__id_ho__04E4BC85" Association="Self.FK__Confirmac__id_ho__04E4BC85">
+            <End Role="Hospitales" EntitySet="Hospitales" />
+            <End Role="ConfirmacionCita" EntitySet="ConfirmacionCita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Confirmac__id_ho__07C12930" Association="Self.FK__Confirmac__id_ho__07C12930">
+            <End Role="Horarios" EntitySet="Horarios" />
+            <End Role="ConfirmacionCita" EntitySet="ConfirmacionCita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Confirmac__id_pa__02FC7413" Association="Self.FK__Confirmac__id_pa__02FC7413">
+            <End Role="Pacientes" EntitySet="Pacientes" />
+            <End Role="ConfirmacionCita" EntitySet="ConfirmacionCita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Confirmac__id_se__06CD04F7" Association="Self.FK__Confirmac__id_se__06CD04F7">
+            <End Role="Seguros" EntitySet="Seguros" />
+            <End Role="ConfirmacionCita" EntitySet="ConfirmacionCita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Doctores__id_hos__398D8EEE" Association="Self.FK__Doctores__id_hos__398D8EEE">
+            <End Role="Hospitales" EntitySet="Hospitales" />
+            <End Role="Doctores" EntitySet="Doctores" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Especiali__id_do__3C69FB99" Association="Self.FK__Especiali__id_do__3C69FB99">
+            <End Role="Doctores" EntitySet="Doctores" />
+            <End Role="Especialidades" EntitySet="Especialidades" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historico__id_es__4E88ABD4" Association="Self.FK__Historico__id_es__4E88ABD4">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Historico_paciente" EntitySet="Historico_paciente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historico__id_re__4D94879B" Association="Self.FK__Historico__id_re__4D94879B">
+            <End Role="Resultado_factura" EntitySet="Resultado_factura" />
+            <End Role="Historico_paciente" EntitySet="Historico_paciente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Horarios__id_doc__5165187F" Association="Self.FK__Horarios__id_doc__5165187F">
+            <End Role="Doctores" EntitySet="Doctores" />
+            <End Role="Horarios" EntitySet="Horarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Resultado__id_do__45F365D3" Association="Self.FK__Resultado__id_do__45F365D3">
+            <End Role="Doctores" EntitySet="Doctores" />
+            <End Role="Resultado_factura" EntitySet="Resultado_factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Resultado__id_fo__46E78A0C" Association="Self.FK__Resultado__id_fo__46E78A0C">
+            <End Role="Forma_de_pago" EntitySet="Forma_de_pago" />
+            <End Role="Resultado_factura" EntitySet="Resultado_factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pacientes_Horarios" Association="Self.FK_Pacientes_Horarios">
+            <End Role="Horarios" EntitySet="Horarios" />
+            <End Role="Pacientes" EntitySet="Pacientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pacientes_Seguros" Association="Self.FK_Pacientes_Seguros">
+            <End Role="Seguros" EntitySet="Seguros" />
+            <End Role="Pacientes" EntitySet="Pacientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResultadoFactura_Pacientes" Association="Self.FK_ResultadoFactura_Pacientes">
+            <End Role="Pacientes" EntitySet="Pacientes" />
+            <End Role="Resultado_factura" EntitySet="Resultado_factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResultadoFactura_Seguros" Association="Self.FK_ResultadoFactura_Seguros">
+            <End Role="Seguros" EntitySet="Seguros" />
+            <End Role="Resultado_factura" EntitySet="Resultado_factura" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ConsultasHospitalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ConfirmacionCita">
+          <Key>
+            <PropertyRef Name="id_confirmacion" />
+          </Key>
+          <Property Name="id_confirmacion" Type="Int32" Nullable="false" />
+          <Property Name="id_paciente" Type="Int32" />
+          <Property Name="id_doctor" Type="Int32" />
+          <Property Name="id_hospital" Type="Int32" />
+          <Property Name="id_especialidad" Type="Int32" />
+          <Property Name="id_seguro" Type="Int32" />
+          <Property Name="id_horario" Type="Int32" />
+          <NavigationProperty Name="Doctores" Relationship="Self.FK__Confirmac__id_do__03F0984C" FromRole="ConfirmacionCita" ToRole="Doctores" />
+          <NavigationProperty Name="Especialidades" Relationship="Self.FK__Confirmac__id_es__05D8E0BE" FromRole="ConfirmacionCita" ToRole="Especialidades" />
+          <NavigationProperty Name="Hospitales" Relationship="Self.FK__Confirmac__id_ho__04E4BC85" FromRole="ConfirmacionCita" ToRole="Hospitales" />
+          <NavigationProperty Name="Horarios" Relationship="Self.FK__Confirmac__id_ho__07C12930" FromRole="ConfirmacionCita" ToRole="Horarios" />
+          <NavigationProperty Name="Pacientes" Relationship="Self.FK__Confirmac__id_pa__02FC7413" FromRole="ConfirmacionCita" ToRole="Pacientes" />
+          <NavigationProperty Name="Seguros" Relationship="Self.FK__Confirmac__id_se__06CD04F7" FromRole="ConfirmacionCita" ToRole="Seguros" />
+        </EntityType>
+        <EntityType Name="Doctores">
+          <Key>
+            <PropertyRef Name="id_doctor" />
+          </Key>
+          <Property Name="id_doctor" Type="Int32" Nullable="false" />
+          <Property Name="nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="apellido" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="id_hospital" Type="Int32" />
+          <NavigationProperty Name="ConfirmacionCita" Relationship="Self.FK__Confirmac__id_do__03F0984C" FromRole="Doctores" ToRole="ConfirmacionCita" />
+          <NavigationProperty Name="Hospitales" Relationship="Self.FK__Doctores__id_hos__398D8EEE" FromRole="Doctores" ToRole="Hospitales" />
+          <NavigationProperty Name="Especialidades" Relationship="Self.FK__Especiali__id_do__3C69FB99" FromRole="Doctores" ToRole="Especialidades" />
+          <NavigationProperty Name="Horarios" Relationship="Self.FK__Horarios__id_doc__5165187F" FromRole="Doctores" ToRole="Horarios" />
+          <NavigationProperty Name="Resultado_factura" Relationship="Self.FK__Resultado__id_do__45F365D3" FromRole="Doctores" ToRole="Resultado_factura" />
+        </EntityType>
+        <EntityType Name="Especialidades">
+          <Key>
+            <PropertyRef Name="id_especialidad" />
+          </Key>
+          <Property Name="id_especialidad" Type="Int32" Nullable="false" />
+          <Property Name="nombre_especialidad" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="descripcion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="id_doctor" Type="Int32" />
+          <NavigationProperty Name="ConfirmacionCita" Relationship="Self.FK__Confirmac__id_es__05D8E0BE" FromRole="Especialidades" ToRole="ConfirmacionCita" />
+          <NavigationProperty Name="Doctores" Relationship="Self.FK__Especiali__id_do__3C69FB99" FromRole="Especialidades" ToRole="Doctores" />
+        </EntityType>
+        <EntityType Name="Estatus">
+          <Key>
+            <PropertyRef Name="id_estatus" />
+          </Key>
+          <Property Name="id_estatus" Type="Int32" Nullable="false" />
+          <Property Name="nombre_estatus" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="descripcion" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Historico_paciente" Relationship="Self.FK__Historico__id_es__4E88ABD4" FromRole="Estatus" ToRole="Historico_paciente" />
+        </EntityType>
+        <EntityType Name="Forma_de_pago">
+          <Key>
+            <PropertyRef Name="id_forma_pago" />
+          </Key>
+          <Property Name="id_forma_pago" Type="Int32" Nullable="false" />
+          <Property Name="nombre_forma_pago" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Resultado_factura" Relationship="Self.FK__Resultado__id_fo__46E78A0C" FromRole="Forma_de_pago" ToRole="Resultado_factura" />
+        </EntityType>
+        <EntityType Name="Historico_paciente">
+          <Key>
+            <PropertyRef Name="id_historico_paciente" />
+          </Key>
+          <Property Name="id_historico_paciente" Type="Int32" Nullable="false" />
+          <Property Name="id_resultado_factura" Type="Int32" />
+          <Property Name="id_estatus" Type="Int32" />
+          <Property Name="fecha_cambio_estatus" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Estatus" Relationship="Self.FK__Historico__id_es__4E88ABD4" FromRole="Historico_paciente" ToRole="Estatus" />
+          <NavigationProperty Name="Resultado_factura" Relationship="Self.FK__Historico__id_re__4D94879B" FromRole="Historico_paciente" ToRole="Resultado_factura" />
+        </EntityType>
+        <EntityType Name="Horarios">
+          <Key>
+            <PropertyRef Name="id_horario" />
+          </Key>
+          <Property Name="id_horario" Type="Int32" Nullable="false" />
+          <Property Name="id_doctor" Type="Int32" />
+          <Property Name="hora_inicio" Type="Time" Precision="7" />
+          <Property Name="hora_fin" Type="Time" Precision="7" />
+          <Property Name="dia_semana" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ConfirmacionCita" Relationship="Self.FK__Confirmac__id_ho__07C12930" FromRole="Horarios" ToRole="ConfirmacionCita" />
+          <NavigationProperty Name="Doctores" Relationship="Self.FK__Horarios__id_doc__5165187F" FromRole="Horarios" ToRole="Doctores" />
+          <NavigationProperty Name="Pacientes" Relationship="Self.FK_Pacientes_Horarios" FromRole="Horarios" ToRole="Pacientes" />
+        </EntityType>
+        <EntityType Name="Hospitales">
+          <Key>
+            <PropertyRef Name="id_hospital" />
+          </Key>
+          <Property Name="id_hospital" Type="Int32" Nullable="false" />
+          <Property Name="nombre_hospital" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="direccion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ConfirmacionCita" Relationship="Self.FK__Confirmac__id_ho__04E4BC85" FromRole="Hospitales" ToRole="ConfirmacionCita" />
+          <NavigationProperty Name="Doctores" Relationship="Self.FK__Doctores__id_hos__398D8EEE" FromRole="Hospitales" ToRole="Doctores" />
+        </EntityType>
+        <EntityType Name="Pacientes">
+          <Key>
+            <PropertyRef Name="id_paciente" />
+          </Key>
+          <Property Name="id_paciente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="apellido" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="fecha_nacimiento" Type="DateTime" Precision="0" />
+          <Property Name="direccion" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="id_seguro" Type="Int32" />
+          <Property Name="id_horario" Type="Int32" />
+          <NavigationProperty Name="ConfirmacionCita" Relationship="Self.FK__Confirmac__id_pa__02FC7413" FromRole="Pacientes" ToRole="ConfirmacionCita" />
+          <NavigationProperty Name="Horarios" Relationship="Self.FK_Pacientes_Horarios" FromRole="Pacientes" ToRole="Horarios" />
+          <NavigationProperty Name="Seguros" Relationship="Self.FK_Pacientes_Seguros" FromRole="Pacientes" ToRole="Seguros" />
+          <NavigationProperty Name="Resultado_factura" Relationship="Self.FK_ResultadoFactura_Pacientes" FromRole="Pacientes" ToRole="Resultado_factura" />
+        </EntityType>
+        <EntityType Name="Resultado_factura">
+          <Key>
+            <PropertyRef Name="id_resultado_factura" />
+          </Key>
+          <Property Name="id_resultado_factura" Type="Int32" Nullable="false" />
+          <Property Name="id_doctor" Type="Int32" />
+          <Property Name="id_forma_pago" Type="Int32" />
+          <Property Name="id_paciente" Type="Int32" />
+          <Property Name="id_seguro" Type="Int32" />
+          <Property Name="fecha_factura" Type="DateTime" Precision="3" />
+          <Property Name="monto" Type="Decimal" Precision="10" Scale="2" />
+          <NavigationProperty Name="Doctores" Relationship="Self.FK__Resultado__id_do__45F365D3" FromRole="Resultado_factura" ToRole="Doctores" />
+          <NavigationProperty Name="Forma_de_pago" Relationship="Self.FK__Resultado__id_fo__46E78A0C" FromRole="Resultado_factura" ToRole="Forma_de_pago" />
+          <NavigationProperty Name="Historico_paciente" Relationship="Self.FK__Historico__id_re__4D94879B" FromRole="Resultado_factura" ToRole="Historico_paciente" />
+          <NavigationProperty Name="Pacientes" Relationship="Self.FK_ResultadoFactura_Pacientes" FromRole="Resultado_factura" ToRole="Pacientes" />
+          <NavigationProperty Name="Seguros" Relationship="Self.FK_ResultadoFactura_Seguros" FromRole="Resultado_factura" ToRole="Seguros" />
+        </EntityType>
+        <EntityType Name="Seguros">
+          <Key>
+            <PropertyRef Name="id_seguro" />
+          </Key>
+          <Property Name="id_seguro" Type="Int32" Nullable="false" />
+          <Property Name="nombre_seguro" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="tipo_cobertura" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="ConfirmacionCita" Relationship="Self.FK__Confirmac__id_se__06CD04F7" FromRole="Seguros" ToRole="ConfirmacionCita" />
+          <NavigationProperty Name="Pacientes" Relationship="Self.FK_Pacientes_Seguros" FromRole="Seguros" ToRole="Pacientes" />
+          <NavigationProperty Name="Resultado_factura" Relationship="Self.FK_ResultadoFactura_Seguros" FromRole="Seguros" ToRole="Resultado_factura" />
+        </EntityType>
+        <Association Name="FK__Confirmac__id_do__03F0984C">
+          <End Role="Doctores" Type="Self.Doctores" Multiplicity="0..1" />
+          <End Role="ConfirmacionCita" Type="Self.ConfirmacionCita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctores">
+              <PropertyRef Name="id_doctor" />
+            </Principal>
+            <Dependent Role="ConfirmacionCita">
+              <PropertyRef Name="id_doctor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Confirmac__id_es__05D8E0BE">
+          <End Role="Especialidades" Type="Self.Especialidades" Multiplicity="0..1" />
+          <End Role="ConfirmacionCita" Type="Self.ConfirmacionCita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Especialidades">
+              <PropertyRef Name="id_especialidad" />
+            </Principal>
+            <Dependent Role="ConfirmacionCita">
+              <PropertyRef Name="id_especialidad" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Confirmac__id_ho__04E4BC85">
+          <End Role="Hospitales" Type="Self.Hospitales" Multiplicity="0..1" />
+          <End Role="ConfirmacionCita" Type="Self.ConfirmacionCita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitales">
+              <PropertyRef Name="id_hospital" />
+            </Principal>
+            <Dependent Role="ConfirmacionCita">
+              <PropertyRef Name="id_hospital" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Confirmac__id_ho__07C12930">
+          <End Role="Horarios" Type="Self.Horarios" Multiplicity="0..1" />
+          <End Role="ConfirmacionCita" Type="Self.ConfirmacionCita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Horarios">
+              <PropertyRef Name="id_horario" />
+            </Principal>
+            <Dependent Role="ConfirmacionCita">
+              <PropertyRef Name="id_horario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Confirmac__id_pa__02FC7413">
+          <End Role="Pacientes" Type="Self.Pacientes" Multiplicity="0..1" />
+          <End Role="ConfirmacionCita" Type="Self.ConfirmacionCita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pacientes">
+              <PropertyRef Name="id_paciente" />
+            </Principal>
+            <Dependent Role="ConfirmacionCita">
+              <PropertyRef Name="id_paciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Confirmac__id_se__06CD04F7">
+          <End Role="Seguros" Type="Self.Seguros" Multiplicity="0..1" />
+          <End Role="ConfirmacionCita" Type="Self.ConfirmacionCita" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seguros">
+              <PropertyRef Name="id_seguro" />
+            </Principal>
+            <Dependent Role="ConfirmacionCita">
+              <PropertyRef Name="id_seguro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Doctores__id_hos__398D8EEE">
+          <End Role="Hospitales" Type="Self.Hospitales" Multiplicity="0..1" />
+          <End Role="Doctores" Type="Self.Doctores" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Hospitales">
+              <PropertyRef Name="id_hospital" />
+            </Principal>
+            <Dependent Role="Doctores">
+              <PropertyRef Name="id_hospital" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Especiali__id_do__3C69FB99">
+          <End Role="Doctores" Type="Self.Doctores" Multiplicity="0..1" />
+          <End Role="Especialidades" Type="Self.Especialidades" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctores">
+              <PropertyRef Name="id_doctor" />
+            </Principal>
+            <Dependent Role="Especialidades">
+              <PropertyRef Name="id_doctor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Horarios__id_doc__5165187F">
+          <End Role="Doctores" Type="Self.Doctores" Multiplicity="0..1" />
+          <End Role="Horarios" Type="Self.Horarios" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctores">
+              <PropertyRef Name="id_doctor" />
+            </Principal>
+            <Dependent Role="Horarios">
+              <PropertyRef Name="id_doctor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Resultado__id_do__45F365D3">
+          <End Role="Doctores" Type="Self.Doctores" Multiplicity="0..1" />
+          <End Role="Resultado_factura" Type="Self.Resultado_factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Doctores">
+              <PropertyRef Name="id_doctor" />
+            </Principal>
+            <Dependent Role="Resultado_factura">
+              <PropertyRef Name="id_doctor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historico__id_es__4E88ABD4">
+          <End Role="Estatus" Type="Self.Estatus" Multiplicity="0..1" />
+          <End Role="Historico_paciente" Type="Self.Historico_paciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Estatus">
+              <PropertyRef Name="id_estatus" />
+            </Principal>
+            <Dependent Role="Historico_paciente">
+              <PropertyRef Name="id_estatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Resultado__id_fo__46E78A0C">
+          <End Role="Forma_de_pago" Type="Self.Forma_de_pago" Multiplicity="0..1" />
+          <End Role="Resultado_factura" Type="Self.Resultado_factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Forma_de_pago">
+              <PropertyRef Name="id_forma_pago" />
+            </Principal>
+            <Dependent Role="Resultado_factura">
+              <PropertyRef Name="id_forma_pago" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Historico__id_re__4D94879B">
+          <End Role="Resultado_factura" Type="Self.Resultado_factura" Multiplicity="0..1" />
+          <End Role="Historico_paciente" Type="Self.Historico_paciente" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Resultado_factura">
+              <PropertyRef Name="id_resultado_factura" />
+            </Principal>
+            <Dependent Role="Historico_paciente">
+              <PropertyRef Name="id_resultado_factura" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pacientes_Horarios">
+          <End Role="Horarios" Type="Self.Horarios" Multiplicity="0..1" />
+          <End Role="Pacientes" Type="Self.Pacientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Horarios">
+              <PropertyRef Name="id_horario" />
+            </Principal>
+            <Dependent Role="Pacientes">
+              <PropertyRef Name="id_horario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Pacientes_Seguros">
+          <End Role="Seguros" Type="Self.Seguros" Multiplicity="0..1" />
+          <End Role="Pacientes" Type="Self.Pacientes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seguros">
+              <PropertyRef Name="id_seguro" />
+            </Principal>
+            <Dependent Role="Pacientes">
+              <PropertyRef Name="id_seguro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ResultadoFactura_Pacientes">
+          <End Role="Pacientes" Type="Self.Pacientes" Multiplicity="0..1" />
+          <End Role="Resultado_factura" Type="Self.Resultado_factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Pacientes">
+              <PropertyRef Name="id_paciente" />
+            </Principal>
+            <Dependent Role="Resultado_factura">
+              <PropertyRef Name="id_paciente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ResultadoFactura_Seguros">
+          <End Role="Seguros" Type="Self.Seguros" Multiplicity="0..1" />
+          <End Role="Resultado_factura" Type="Self.Resultado_factura" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Seguros">
+              <PropertyRef Name="id_seguro" />
+            </Principal>
+            <Dependent Role="Resultado_factura">
+              <PropertyRef Name="id_seguro" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ConsultasHospitalEntities9" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ConfirmacionCita" EntityType="Self.ConfirmacionCita" />
+          <EntitySet Name="Doctores" EntityType="Self.Doctores" />
+          <EntitySet Name="Especialidades" EntityType="Self.Especialidades" />
+          <EntitySet Name="Estatus" EntityType="Self.Estatus" />
+          <EntitySet Name="Forma_de_pago" EntityType="Self.Forma_de_pago" />
+          <EntitySet Name="Historico_paciente" EntityType="Self.Historico_paciente" />
+          <EntitySet Name="Horarios" EntityType="Self.Horarios" />
+          <EntitySet Name="Hospitales" EntityType="Self.Hospitales" />
+          <EntitySet Name="Pacientes" EntityType="Self.Pacientes" />
+          <EntitySet Name="Resultado_factura" EntityType="Self.Resultado_factura" />
+          <EntitySet Name="Seguros" EntityType="Self.Seguros" />
+          <AssociationSet Name="FK__Confirmac__id_do__03F0984C" Association="Self.FK__Confirmac__id_do__03F0984C">
+            <End Role="Doctores" EntitySet="Doctores" />
+            <End Role="ConfirmacionCita" EntitySet="ConfirmacionCita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Confirmac__id_es__05D8E0BE" Association="Self.FK__Confirmac__id_es__05D8E0BE">
+            <End Role="Especialidades" EntitySet="Especialidades" />
+            <End Role="ConfirmacionCita" EntitySet="ConfirmacionCita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Confirmac__id_ho__04E4BC85" Association="Self.FK__Confirmac__id_ho__04E4BC85">
+            <End Role="Hospitales" EntitySet="Hospitales" />
+            <End Role="ConfirmacionCita" EntitySet="ConfirmacionCita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Confirmac__id_ho__07C12930" Association="Self.FK__Confirmac__id_ho__07C12930">
+            <End Role="Horarios" EntitySet="Horarios" />
+            <End Role="ConfirmacionCita" EntitySet="ConfirmacionCita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Confirmac__id_pa__02FC7413" Association="Self.FK__Confirmac__id_pa__02FC7413">
+            <End Role="Pacientes" EntitySet="Pacientes" />
+            <End Role="ConfirmacionCita" EntitySet="ConfirmacionCita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Confirmac__id_se__06CD04F7" Association="Self.FK__Confirmac__id_se__06CD04F7">
+            <End Role="Seguros" EntitySet="Seguros" />
+            <End Role="ConfirmacionCita" EntitySet="ConfirmacionCita" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Doctores__id_hos__398D8EEE" Association="Self.FK__Doctores__id_hos__398D8EEE">
+            <End Role="Hospitales" EntitySet="Hospitales" />
+            <End Role="Doctores" EntitySet="Doctores" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Especiali__id_do__3C69FB99" Association="Self.FK__Especiali__id_do__3C69FB99">
+            <End Role="Doctores" EntitySet="Doctores" />
+            <End Role="Especialidades" EntitySet="Especialidades" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Horarios__id_doc__5165187F" Association="Self.FK__Horarios__id_doc__5165187F">
+            <End Role="Doctores" EntitySet="Doctores" />
+            <End Role="Horarios" EntitySet="Horarios" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Resultado__id_do__45F365D3" Association="Self.FK__Resultado__id_do__45F365D3">
+            <End Role="Doctores" EntitySet="Doctores" />
+            <End Role="Resultado_factura" EntitySet="Resultado_factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historico__id_es__4E88ABD4" Association="Self.FK__Historico__id_es__4E88ABD4">
+            <End Role="Estatus" EntitySet="Estatus" />
+            <End Role="Historico_paciente" EntitySet="Historico_paciente" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Resultado__id_fo__46E78A0C" Association="Self.FK__Resultado__id_fo__46E78A0C">
+            <End Role="Forma_de_pago" EntitySet="Forma_de_pago" />
+            <End Role="Resultado_factura" EntitySet="Resultado_factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Historico__id_re__4D94879B" Association="Self.FK__Historico__id_re__4D94879B">
+            <End Role="Resultado_factura" EntitySet="Resultado_factura" />
+            <End Role="Historico_paciente" EntitySet="Historico_paciente" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pacientes_Horarios" Association="Self.FK_Pacientes_Horarios">
+            <End Role="Horarios" EntitySet="Horarios" />
+            <End Role="Pacientes" EntitySet="Pacientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Pacientes_Seguros" Association="Self.FK_Pacientes_Seguros">
+            <End Role="Seguros" EntitySet="Seguros" />
+            <End Role="Pacientes" EntitySet="Pacientes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResultadoFactura_Pacientes" Association="Self.FK_ResultadoFactura_Pacientes">
+            <End Role="Pacientes" EntitySet="Pacientes" />
+            <End Role="Resultado_factura" EntitySet="Resultado_factura" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ResultadoFactura_Seguros" Association="Self.FK_ResultadoFactura_Seguros">
+            <End Role="Seguros" EntitySet="Seguros" />
+            <End Role="Resultado_factura" EntitySet="Resultado_factura" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ConsultasHospitalModelStoreContainer" CdmEntityContainer="ConsultasHospitalEntities9">
+          <EntitySetMapping Name="ConfirmacionCita">
+            <EntityTypeMapping TypeName="ConsultasHospitalModel.ConfirmacionCita">
+              <MappingFragment StoreEntitySet="ConfirmacionCita">
+                <ScalarProperty Name="id_confirmacion" ColumnName="id_confirmacion" />
+                <ScalarProperty Name="id_paciente" ColumnName="id_paciente" />
+                <ScalarProperty Name="id_doctor" ColumnName="id_doctor" />
+                <ScalarProperty Name="id_hospital" ColumnName="id_hospital" />
+                <ScalarProperty Name="id_especialidad" ColumnName="id_especialidad" />
+                <ScalarProperty Name="id_seguro" ColumnName="id_seguro" />
+                <ScalarProperty Name="id_horario" ColumnName="id_horario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Doctores">
+            <EntityTypeMapping TypeName="ConsultasHospitalModel.Doctores">
+              <MappingFragment StoreEntitySet="Doctores">
+                <ScalarProperty Name="id_doctor" ColumnName="id_doctor" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="id_hospital" ColumnName="id_hospital" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Especialidades">
+            <EntityTypeMapping TypeName="ConsultasHospitalModel.Especialidades">
+              <MappingFragment StoreEntitySet="Especialidades">
+                <ScalarProperty Name="id_especialidad" ColumnName="id_especialidad" />
+                <ScalarProperty Name="nombre_especialidad" ColumnName="nombre_especialidad" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+                <ScalarProperty Name="id_doctor" ColumnName="id_doctor" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Estatus">
+            <EntityTypeMapping TypeName="ConsultasHospitalModel.Estatus">
+              <MappingFragment StoreEntitySet="Estatus">
+                <ScalarProperty Name="id_estatus" ColumnName="id_estatus" />
+                <ScalarProperty Name="nombre_estatus" ColumnName="nombre_estatus" />
+                <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Forma_de_pago">
+            <EntityTypeMapping TypeName="ConsultasHospitalModel.Forma_de_pago">
+              <MappingFragment StoreEntitySet="Forma_de_pago">
+                <ScalarProperty Name="id_forma_pago" ColumnName="id_forma_pago" />
+                <ScalarProperty Name="nombre_forma_pago" ColumnName="nombre_forma_pago" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Historico_paciente">
+            <EntityTypeMapping TypeName="ConsultasHospitalModel.Historico_paciente">
+              <MappingFragment StoreEntitySet="Historico_paciente">
+                <ScalarProperty Name="id_historico_paciente" ColumnName="id_historico_paciente" />
+                <ScalarProperty Name="id_resultado_factura" ColumnName="id_resultado_factura" />
+                <ScalarProperty Name="id_estatus" ColumnName="id_estatus" />
+                <ScalarProperty Name="fecha_cambio_estatus" ColumnName="fecha_cambio_estatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Horarios">
+            <EntityTypeMapping TypeName="ConsultasHospitalModel.Horarios">
+              <MappingFragment StoreEntitySet="Horarios">
+                <ScalarProperty Name="id_horario" ColumnName="id_horario" />
+                <ScalarProperty Name="id_doctor" ColumnName="id_doctor" />
+                <ScalarProperty Name="hora_inicio" ColumnName="hora_inicio" />
+                <ScalarProperty Name="hora_fin" ColumnName="hora_fin" />
+                <ScalarProperty Name="dia_semana" ColumnName="dia_semana" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Hospitales">
+            <EntityTypeMapping TypeName="ConsultasHospitalModel.Hospitales">
+              <MappingFragment StoreEntitySet="Hospitales">
+                <ScalarProperty Name="id_hospital" ColumnName="id_hospital" />
+                <ScalarProperty Name="nombre_hospital" ColumnName="nombre_hospital" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Pacientes">
+            <EntityTypeMapping TypeName="ConsultasHospitalModel.Pacientes">
+              <MappingFragment StoreEntitySet="Pacientes">
+                <ScalarProperty Name="id_paciente" ColumnName="id_paciente" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="apellido" ColumnName="apellido" />
+                <ScalarProperty Name="fecha_nacimiento" ColumnName="fecha_nacimiento" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="id_seguro" ColumnName="id_seguro" />
+                <ScalarProperty Name="id_horario" ColumnName="id_horario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Resultado_factura">
+            <EntityTypeMapping TypeName="ConsultasHospitalModel.Resultado_factura">
+              <MappingFragment StoreEntitySet="Resultado_factura">
+                <ScalarProperty Name="id_resultado_factura" ColumnName="id_resultado_factura" />
+                <ScalarProperty Name="id_doctor" ColumnName="id_doctor" />
+                <ScalarProperty Name="id_forma_pago" ColumnName="id_forma_pago" />
+                <ScalarProperty Name="id_paciente" ColumnName="id_paciente" />
+                <ScalarProperty Name="id_seguro" ColumnName="id_seguro" />
+                <ScalarProperty Name="fecha_factura" ColumnName="fecha_factura" />
+                <ScalarProperty Name="monto" ColumnName="monto" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seguros">
+            <EntityTypeMapping TypeName="ConsultasHospitalModel.Seguros">
+              <MappingFragment StoreEntitySet="Seguros">
+                <ScalarProperty Name="id_seguro" ColumnName="id_seguro" />
+                <ScalarProperty Name="nombre_seguro" ColumnName="nombre_seguro" />
+                <ScalarProperty Name="tipo_cobertura" ColumnName="tipo_cobertura" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="7d50007d22764b31a50e1adb653ecde7" Name="Diagram1">
+        <EntityTypeShape EntityType="ConsultasHospitalModel.ConfirmacionCita" Width="1.5" PointX="3" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsultasHospitalModel.Doctores" Width="1.5" PointX="0.75" PointY="9.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsultasHospitalModel.Especialidades" Width="1.5" PointX="0.75" PointY="17.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsultasHospitalModel.Estatus" Width="1.5" PointX="8.25" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsultasHospitalModel.Forma_de_pago" Width="1.5" PointX="6" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsultasHospitalModel.Historico_paciente" Width="1.5" PointX="10.5" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsultasHospitalModel.Horarios" Width="1.5" PointX="0.75" PointY="20.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsultasHospitalModel.Hospitales" Width="1.5" PointX="1.5" PointY="14" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsultasHospitalModel.Pacientes" Width="1.5" PointX="6" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsultasHospitalModel.Resultado_factura" Width="1.5" PointX="8.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="ConsultasHospitalModel.Seguros" Width="1.5" PointX="0.75" PointY="4.5" IsExpanded="true" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK__Confirmac__id_do__03F0984C" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK__Confirmac__id_es__05D8E0BE" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK__Confirmac__id_ho__04E4BC85" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK__Confirmac__id_ho__07C12930" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK__Confirmac__id_pa__02FC7413" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK__Confirmac__id_se__06CD04F7" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK__Doctores__id_hos__398D8EEE" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK__Especiali__id_do__3C69FB99" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK__Horarios__id_doc__5165187F" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK__Resultado__id_do__45F365D3" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK__Historico__id_es__4E88ABD4" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK__Resultado__id_fo__46E78A0C" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK__Historico__id_re__4D94879B" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK_Pacientes_Horarios" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK_Pacientes_Seguros" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK_ResultadoFactura_Pacientes" ManuallyRouted="false" />
+        <AssociationConnector Association="ConsultasHospitalModel.FK_ResultadoFactura_Seguros" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

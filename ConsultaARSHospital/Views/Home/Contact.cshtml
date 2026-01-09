@@ -1,0 +1,55 @@
+﻿@model IEnumerable<ConsultaARSHospital.Doctores>
+
+@{
+    ViewBag.Title = "Doctores";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th></th> <!-- Agregado: columna para acciones -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var doctor in Model)
+            {
+                <tr>
+                    <td>@doctor.nombre</td>
+                    <td>@doctor.apellido</td>
+                    <td>@doctor.email</td>
+                    <td>@doctor.telefono</td>
+                    <td>
+                   
+                        @Html.ActionLink("Editar", "EditarDoctor", new { id = doctor.id_doctor }, new { @class = "btn btn-primary" })
+                    
+                    
+                        @Html.ActionLink("Eliminar", "EliminarDoctor", new { id = doctor.id_doctor }, new { @class = "btn btn-danger" })
+                    
+                        @Html.ActionLink("Detalles", "DetallesDoctor", new { id = doctor.id_doctor }, new { @class = "btn btn-info btn-sm" })
+                    </td>
+
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No se encontraron doctores.</p>
+}
+
+<!-- Botón para crear un nuevo doctor -->
+@Html.ActionLink("Crear Nuevo Doctor", "CrearDoctor", null, new { @class = "btn btn-success" })
+<!-- Botón para crear una nueva especialidad -->
+
+
+
+

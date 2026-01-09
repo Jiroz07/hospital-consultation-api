@@ -1,0 +1,60 @@
+﻿@model ConsultaARSHospital.Doctores
+
+@{
+    ViewBag.Title = "Detalles del Doctor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Función para capitalizar la primera letra
+    string ToUpperFirstLetter(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+            return input;
+
+        return char.ToUpper(input[0]) + input.Substring(1);
+    }
+}
+
+<h2>Detalles del Doctor</h2>
+
+<div>
+    <h4>Información del Doctor</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @ToUpperFirstLetter(Html.DisplayNameFor(model => model.nombre).ToString())
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.nombre)
+        </dd>
+
+        <dt>
+            @ToUpperFirstLetter(Html.DisplayNameFor(model => model.apellido).ToString())
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.apellido)
+        </dd>
+
+        <dt>
+            @ToUpperFirstLetter(Html.DisplayNameFor(model => model.email).ToString())
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.email)
+        </dd>
+
+        <dt>
+            @ToUpperFirstLetter(Html.DisplayNameFor(model => model.telefono).ToString())
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.telefono)
+        </dd>
+
+        <dt>
+            @ToUpperFirstLetter("Hospital")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Hospitales.nombre_hospital)
+        </dd>
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Volver a la lista", "Contact")

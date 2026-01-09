@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ConsultasHospitalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Doctores">
+    <Key>
+      <PropertyRef Name="id_doctor" />
+    </Key>
+    <Property Name="id_doctor" Type="Int32" Nullable="false" />
+    <Property Name="nombre" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="apellido" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+    <Property Name="telefono" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="id_hospital" Type="Int32" />
+  </EntityType>
+  <EntityContainer Name="ConsultasHospitalEntities3" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Doctores" EntityType="Self.Doctores" />
+  </EntityContainer>
+</Schema>

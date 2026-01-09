@@ -1,0 +1,38 @@
+﻿@model ConsultaARSHospital.Hospitales
+
+@{
+    ViewBag.Title = "Crear Hospital";
+}
+
+<h2>Crear Hospital</h2>
+
+@using (Html.BeginForm("CrearHospitales", "Home", FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.id_hospital, "ID ")
+        @Html.TextBoxFor(model => model.id_hospital, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.nombre_hospital, "Nombre del Hospital")
+        @Html.TextBoxFor(model => model.nombre_hospital, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.direccion, "Direccion")
+        @Html.TextBoxFor(model => model.direccion, new { @class = "form-control" })
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.telefono, "Telefono")
+        @Html.TextBoxFor(model => model.telefono, new { @class = "form-control" })
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Crear</button>
+}
+
+

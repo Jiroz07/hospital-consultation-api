@@ -1,0 +1,33 @@
+﻿@model ConsultaARSHospital.Hospitales
+
+@{
+    ViewBag.Title = "Eliminar Hospital";
+}
+
+<h2>Eliminar Hospital</h2>
+
+<div>
+    <h4>¿Estás seguro de que quieres eliminar este hospital?</h4>
+    <hr />
+
+    <dl class="dl-horizontal">
+        <dt>Nombre:</dt>
+        <dd>@Html.DisplayFor(model => model.nombre_hospital)</dd>
+
+        <dt>Dirección:</dt>
+        <dd>@Html.DisplayFor(model => model.direccion)</dd>
+
+        <dt>Teléfono:</dt>
+        <dd>@Html.DisplayFor(model => model.telefono)</dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Borrar" class="btn btn-default" /> |
+            @Html.ActionLink("Volver", "About")
+        </div>
+    }
+</div>

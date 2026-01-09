@@ -1,0 +1,43 @@
+﻿@model ConsultaARSHospital.Historico_paciente
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Historico_paciente</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.fecha_cambio_estatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fecha_cambio_estatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Estatus.nombre_estatus)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Estatus.nombre_estatus)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Resultado_factura.id_resultado_factura)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Resultado_factura.id_resultado_factura)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_historico_paciente }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

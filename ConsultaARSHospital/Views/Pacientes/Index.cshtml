@@ -1,0 +1,43 @@
+﻿@model IEnumerable<ConsultaARSHospital.Pacientes>
+
+@{
+    ViewBag.Title = "Lista de Pacientes";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lista de Pacientes</h2>
+
+<p>
+    @Html.ActionLink("Compleatar informacion Personal", "Create", null, new { @class = "btn btn-primary" })
+</p>
+
+<div class="table-responsive">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Fecha de Nacimiento</th>
+                <th>Dirección</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var paciente in Model)
+            {
+                <tr>
+                    <td>@paciente.nombre</td>
+                    <td>@paciente.apellido</td>
+                    <td>@(paciente.fecha_nacimiento != null ? paciente.fecha_nacimiento.Value.ToShortDateString() : "")</td>
+                    <td>@paciente.direccion</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            @Html.ActionLink("Detalles", "Details", new { id = paciente.id_paciente }, new { @class = "btn btn-info btn-sm" })
+                            
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

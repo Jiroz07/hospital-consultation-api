@@ -1,0 +1,83 @@
+﻿@{
+    ViewBag.Title = "Agendar Cita";
+}
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="alert alert-success" role="alert">
+        @TempData["Mensaje"]
+    </div>
+}
+
+<div class="jumbotron">
+    <h1>Agendar Cita Médica</h1>
+    <p class="lead">Bienvenido al sistema de agendamiento de Citas médicas. Aquí puedes programar tu cita de manera rápida y sencilla.</p>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <form action="/Home/Index" method="post">
+
+                <div class="form-group">
+                    <label for="hospital">Hospital:</label>
+                    <select class="form-control" id="hospital" name="hospital" onchange="this.form.submit()">
+                        @foreach (var hospital in ViewBag.Hospitales)
+                        {
+                            <option value="@hospital.id_hospital" @(hospital.id_hospital == Convert.ToInt32(Request.Form["hospital"]) ? "selected" : "")>@hospital.nombre_hospital</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="doctor">Doctor:</label>
+                    <select class="form-control" id="doctor" name="doctor">
+                        @foreach (var doctor in ViewBag.Doctores)
+                        {
+                            if (doctor.id_hospital == ViewBag.HospitalSeleccionado)
+                            {
+                                <option value="@doctor.id_doctor">@($"{doctor.nombre} {doctor.apellido}")</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="especialidad">Especialidad:</label>
+                    <select class="form-control" id="especialidad" name="especialidad">
+                        @foreach (var especialidad in ViewBag.Especialidades)
+                        {
+                            foreach (var doctor in ViewBag.Doctores)
+                            {
+                                if (doctor.id_doctor == especialidad.id_doctor && doctor.id_hospital == ViewBag.HospitalSeleccionado)
+                                {
+                                    <option value="@especialidad.id_especialidad">@especialidad.nombre_especialidad</option>
+                                }
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="seguro">¿Aplica seguro?</label>
+                    <select class="form-control" id="seguro" name="seguro">
+                        <option value="si">Sí</option>
+                        <option value="no">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="forma_pago">Forma de Pago:</label>
+                    <select class="form-control" id="forma_pago" name="forma_pago">
+                        @foreach (var forma_de_pago in ViewBag.Forma_de_pago)
+                        {
+                            <option value="@forma_de_pago.id_forma_pago">@forma_de_pago.nombre_forma_pago</option>
+                        }
+                    </select>
+                </div>
+                <a href="@Url.Action("CrearPacientes", "Home", new {
+                     nombreHospital = ViewBag.NombreHospitalSeleccionado,
+    nombreDoctor = ViewBag.NombreDoctorSeleccionado,
+    nombreEspecialidad = ViewBag.NombreEspecialidadSeleccionada
+                })" class="btn btn-primary"> Completar Informaciones </a>
+
+            </form>
+        </div>
+    </div>
+</div>

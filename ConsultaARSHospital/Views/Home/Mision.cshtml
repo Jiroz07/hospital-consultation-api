@@ -1,0 +1,46 @@
+﻿@model IEnumerable<ConsultaARSHospital.Especialidades>
+
+@{
+    ViewBag.Title = "Especialidades";
+}
+
+<h2>@ViewBag.Title</h2>
+
+@if (Model != null && Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th></th> <!-- Agregado: columna para acciones -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var especialidad in Model)
+            {
+                <tr>
+                    <td>@especialidad.nombre_especialidad</td>
+                    <td>@especialidad.descripcion</td>
+                    <td>
+                        <!-- Botón para editar la especialidad -->
+                        @Html.ActionLink("Editar", "EditarEspecialidades", new { id = especialidad.id_especialidad }, new { @class = "btn btn-primary btn-sm" })
+
+                        <!-- Botón para eliminar la especialidad -->
+
+                        @Html.ActionLink("Eliminar", "EliminarEspecialidades", new { id = especialidad.id_especialidad }, new { @class = "btn btn-danger btn-sm" })
+
+                        @Html.ActionLink("Detalles", "DetallesEspecialidades", new { id = especialidad.id_especialidad }, new { @class = "btn btn-info btn-sm" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>No se encontraron especialidades.</p>
+}
+
+<!-- Botón para crear una nueva especialidad -->
+@Html.ActionLink("Crear Nueva Especialidad", "CrearEspecialidades", null, new { @class = "btn btn-success" })

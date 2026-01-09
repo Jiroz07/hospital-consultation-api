@@ -1,0 +1,51 @@
+﻿@model ConsultaARSHospital.Horarios
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Horarios</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.dia_semana)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dia_semana)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hora_inicio)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hora_inicio)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.hora_fin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.hora_fin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Doctores.nombre)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Doctores.nombre)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.id_horario }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

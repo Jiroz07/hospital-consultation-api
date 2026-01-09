@@ -1,0 +1,41 @@
+﻿@model IEnumerable<ConsultaARSHospital.Doctores>
+
+@{
+    ViewBag.Title = "Lista de Doctores";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Doctores</h2>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Email</th>
+                <th>Teléfono</th>
+                <th>Hospital</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var doctor in Model)
+            {
+                <tr>
+                    <td>@doctor.nombre</td>
+                    <td>@doctor.apellido</td>
+                    <td>@doctor.email</td>
+                    <td>@doctor.telefono</td>
+                    <td>@(doctor.Hospitales != null ? doctor.Hospitales.nombre_hospital : "")</td>
+                    <td>
+                        <div class="btn-group" role="group">
+                            @Html.ActionLink("Especialidad", "IndexEspecialidades", "Especialidades", new { idDoctor = doctor.id_doctor }, new { @class = "btn btn-success btn-sm" })
+                           
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

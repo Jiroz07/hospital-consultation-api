@@ -1,0 +1,50 @@
+﻿@model ConsultaARSHospital.Especialidades
+
+@{
+    ViewBag.Title = "Detalles de la Especialidad";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // Función para capitalizar la primera letra
+    string ToUpperFirstLetter(string input)
+    {
+        if (string.IsNullOrEmpty(input))
+            return input;
+
+        return char.ToUpper(input[0]) + input.Substring(1);
+    }
+}
+
+<h2>Detalles de la Especialidad</h2>
+
+<div>
+    <h4>Información de la Especialidad</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @ToUpperFirstLetter("Especialidad")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.nombre_especialidad)
+        </dd>
+
+        <dt>
+            @ToUpperFirstLetter("Descripción")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.descripcion)
+        </dd>
+
+        <!-- Agrega más detalles según sea necesario -->
+
+        <dt>
+            @ToUpperFirstLetter("Dr")
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Doctores.nombre)
+        </dd>
+    </dl>
+</div>
+
+<p>
+    @Html.ActionLink("Volver a la lista de Especialidades", "IndexEspecialidades", "Especialidad", null, new { @class = "btn btn-default" })
+</p>
