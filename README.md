@@ -23,4 +23,5 @@ Academic / Practice project
 - Backend development
 - Data modeling
 - MVC architecture
-- Practical software implementation****
+- Practical software implementation
+  
